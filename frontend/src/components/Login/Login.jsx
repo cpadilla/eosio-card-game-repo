@@ -12,9 +12,6 @@ class Login extends Component {
     // Inherit constructor
     super(props);
 
-    console.log("props:");
-    console.log(props);
-
     // State for form data and error message
     this.state = {
       form: {
@@ -29,7 +26,7 @@ class Login extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  // Runs on every keystroke to update the react state
+  // Runs on every keystroke to update the React state
   handleChange(event) {
     const { name, value } = event.target;
     const { form } = this.state;
@@ -61,7 +58,8 @@ class Login extends Component {
       })
       .catch(err => {
         this.setState({ error: err.toString() });
-      });}
+      });
+  }
 
   render() {
     // Extract data from state
@@ -82,6 +80,7 @@ class Login extends Component {
               onChange={ this.handleChange }
               pattern="[\.a-z1-5]{2,12}"
               required
+              autoComplete="off"
             />
           </div>
           <div className="field">
@@ -93,6 +92,7 @@ class Login extends Component {
               onChange={ this.handleChange }
               pattern="^.{51,}$"
               required
+              autoComplete="new-password"
             />
           </div>
           <div className="field form-error">
@@ -116,5 +116,6 @@ const mapStateToProps = state => state;
 const mapDispatchToProps = {
   setUser: UserAction.setUser,
 };
+
 // Export a redux connected component
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
