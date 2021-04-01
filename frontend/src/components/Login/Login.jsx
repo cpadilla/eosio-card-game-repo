@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 // Components
 import { Button } from 'components';
+// Services and redux action
+import { UserAction } from 'actions';
+import { ApiService } from 'services';
 
 class Login extends Component {
 
@@ -8,11 +12,15 @@ class Login extends Component {
     // Inherit constructor
     super(props);
 
+    console.log("props:");
+    console.log(props);
+
     // State for form data and error message
     this.state = {
       form: {
         username: '',
         key: '',
+        error: '',
       },
     }
 
@@ -30,6 +38,7 @@ class Login extends Component {
       form: {
         ...form,
         [name]: value,
+        error: '',
       },
     });
   }
@@ -39,12 +48,24 @@ class Login extends Component {
     // Stop the default form submit browser behavior
     event.preventDefault();
 
-    // TODO: submit transactions to smart contract
-  }
+      // Extract `form` state
+    const { form } = this.state;
+    // Extract `setUser` of `UserAction` and `user.name` of UserReducer from redux
+    const { setUser } = this.props;
+    // Send a login transaction to the blockchain by calling the ApiService,
+    // If it successes, save the username to redux store
+    // Otherwise, save the error state for displaying the message
+    return ApiService.login(form)
+      .then(() => {
+        setUser({ name: form.username });
+      })
+      .catch(err => {
+        this.setState({ error: err.toString() });
+      });}
 
   render() {
     // Extract data from state
-    const { form } = this.state;
+    const { form, error } = this.state;
 
     return (
       <div className="Login">
@@ -74,6 +95,9 @@ class Login extends Component {
               required
             />
           </div>
+          <div className="field form-error">
+            { error && <span className="error">{ error }</span> }
+          </div>
           <div className="bottom">
             <Button type="submit" className="green">
               { "CONFIRM" }
@@ -85,4 +109,12 @@ class Login extends Component {
   }
 }
 
-export default Login;
+// Map all state to component props (for redux to connect)
+const mapStateToProps = state => state;
+
+// Map the following action to props
+const mapDispatchToProps = {
+  setUser: UserAction.setUser,
+};
+// Export a redux connected component
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
