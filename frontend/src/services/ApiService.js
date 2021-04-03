@@ -53,7 +53,6 @@ class ApiService {
     });
   }
 
-
   static login({ username, key }) {
     return new Promise((resolve, reject) => {
       localStorage.setItem("cardgame_account", username);

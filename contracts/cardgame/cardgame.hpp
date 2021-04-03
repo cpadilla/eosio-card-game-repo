@@ -78,7 +78,6 @@ class [[eosio::contract]] cardgame : public eosio::contract {
       auto primary_key() const { return key; }
     };
 
-
     // Multi-index table containing users
     typedef eosio::multi_index<name("users"), user_info> users_table;
 
@@ -97,8 +96,7 @@ class [[eosio::contract]] cardgame : public eosio::contract {
     // Constructor
     cardgame( name receiver, name code, datastream<const char*> ds ):contract(receiver, code, ds),
                        _users(receiver, receiver.value),
-                       _seed(receiver, receiver.value) {
-   }
+                       _seed(receiver, receiver.value) {}
 
     [[eosio::action]]
     void login(name username);

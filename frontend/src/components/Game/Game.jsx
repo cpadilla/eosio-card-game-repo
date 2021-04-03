@@ -68,7 +68,7 @@ class Game extends Component {
     const isGameStarted = game && game.deck_ai.length !== 17;
 
     // If game hasn't started, display `PlayerProfile`
-    // If game has started, display `GameMat`,  `Info` screen
+    // If game has started, display `GameMat`, `Info` screen
     return (
       <section className="Game">
         { !isGameStarted ?

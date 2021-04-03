@@ -9,7 +9,7 @@ import { ApiService } from 'services';
 
 class App extends Component {
 
- constructor(props) {
+  constructor(props) {
     // Inherit constructor
     super(props);
     // Bind functions
@@ -23,14 +23,14 @@ class App extends Component {
     const { setUser } = this.props;
     // Send a request to API (blockchain) to get the current logged in user
     return ApiService.getCurrentUser()
-      // If the server returns a username
+      // If the server return a username
       .then(username => {
         // Save the username to redux store
         // For structure, ref: ./frontend/src/reducers/UserReducer.js
         setUser({ name: username });
       })
       // To ignore 401 console error
-      .catch(() => {})
+      .catch(() => {});
   }
 
   render() {
