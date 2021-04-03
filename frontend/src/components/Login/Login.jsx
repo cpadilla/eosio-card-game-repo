@@ -48,6 +48,8 @@ class Login extends Component {
       // Extract `form` state
     const { form } = this.state;
     // Extract `setUser` of `UserAction` and `user.name` of UserReducer from redux
+    console.log('props:');
+    console.log(this.props);
     const { setUser } = this.props;
     // Send a login transaction to the blockchain by calling the ApiService,
     // If it successes, save the username to redux store

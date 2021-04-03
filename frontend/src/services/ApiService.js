@@ -3,7 +3,9 @@ import { JsSignatureProvider } from 'eosjs/dist/eosjs-jssig'
 
 // Main action call to blockchain
 async function takeAction(action, dataValue) {
+  console.log('takeAction');
   const privateKey = localStorage.getItem("cardgame_key");
+  console.log('privateKey: ' + privateKey);
   const rpc = new JsonRpc(process.env.REACT_APP_EOS_HTTP_ENDPOINT);
   // Using the JsSignatureProvider in the browser is not secure and should only be used for development purposes. Use a secure vault outside of the context of the webpage to ensure security when signing transactions in production
   const signatureProvider = new JsSignatureProvider([privateKey]);
@@ -11,6 +13,7 @@ async function takeAction(action, dataValue) {
 
   // Main call to blockchain after setting action, account_name and data
   try {
+    console.log("main call to blockchain...");
     const resultWithConfig = await api.transact({
       actions: [{
         account: process.env.REACT_APP_EOS_CONTRACT_NAME,
