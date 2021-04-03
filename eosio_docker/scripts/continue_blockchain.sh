@@ -14,7 +14,7 @@ set -m
 # run it in a background job such that docker run could continue
 nodeos -e -p eosio -d /mnt/dev/data \
   --config-dir /mnt/dev/config \
-  --hard-replay \
+  --replay \
   --http-validate-host=false \
   --plugin eosio::producer_plugin \
   --plugin eosio::history_plugin \
